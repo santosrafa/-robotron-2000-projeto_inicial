@@ -1,7 +1,5 @@
-//const braco = document.querySelector("#braco")
-
-/* --querySelectorAll: Uma lista é criada com todos os elementos HTML que possuem a classe .controle-ajuste-- */
 const controle = document.querySelectorAll("[data-controle]")
+const estatistica = document.querySelectorAll("[data-estatistica]")
 
 const pecas = {
     "bracos": {
@@ -38,17 +36,24 @@ const pecas = {
 }
 
 controle.forEach( (elemento) => {
-    elemento.addEventListener("click", (evento) => {
-        manipulaDados(evento.target.dataset.controle, evento.target.parentNode)
+    elemento.addEventListener('click', (evento) => {
+        manipulaDados(evento.target.textContent, evento.target.parentNode)
+        atualizaEstatistica(evento.target.dataset.peca)
     })
 })
 
 function manipulaDados(operacao, controle) {
     const peca = controle.querySelector("[data-contador]")
 
-    if (operacao === "-") {
+    if(operacao === "-") {
         peca.value = parseInt(peca.value) - 1
-    }else {
+    } else {
         peca.value = parseInt(peca.value) + 1
     }
+}
+
+function atualizaEstatistica(peca) {
+    estatistica.forEach( (elemento ) => {
+        elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
+    })
 }
